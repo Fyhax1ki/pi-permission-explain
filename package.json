@@ -1,0 +1,65 @@
+{
+  "name": "pi-permission-explain",
+  "version": "0.1.0",
+  "description": "On-demand, UI-only explanations for Pi permission prompts",
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "pi": {
+    "extensions": [
+      "./src/index.ts"
+    ]
+  },
+  "files": [
+    "src",
+    "locales",
+    "docs",
+    "README.md",
+    "DESIGN.md"
+  ],
+  "scripts": {
+    "check": "tsc --noEmit",
+    "lint": "eslint src tests",
+    "format": "eslint src tests --fix",
+    "test": "node --test tests/*.test.ts"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-ai": "1.4.0",
+    "@earendil-works/pi-coding-agent": "1.4.0",
+    "@earendil-works/pi-tui": "1.4.0",
+    "@gotgenes/pi-permission-system": "40.3.0"
+  },
+  "peerDependenciesMeta": {
+    "@gotgenes/pi-permission-system": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.2",
+    "@types/node": "22.20.4",
+    "@typescript-eslint/eslint-plugin": "8.54.0",
+    "@typescript-eslint/parser": "8.54.0",
+    "eslint": "9.39.2",
+    "typescript": "5.9.3"
+  },
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "permissions",
+    "command-explanation"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fyhax1ki/pi-permission-explain.git"
+  },
+  "homepage": "https://github.com/Fyhax1ki/pi-permission-explain#readme",
+  "bugs": {
+    "url": "https://github.com/Fyhax1ki/pi-permission-explain/issues"
+  }
+}

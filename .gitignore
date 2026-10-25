@@ -1,0 +1,6 @@
+node_modules/
+.npm-logs/
+.npm-cache/
+*.tgz
+coverage/
+.test-tmp/

@@ -1,0 +1,20 @@
+{
+  "requestId": "local-path-1",
+  "source": "tool_call",
+  "surface": "bash",
+  "value": "cat /protected/config",
+  "agentName": null,
+  "request": {
+    "requester": { "agentName": null, "forwarded": false, "sessionId": null },
+    "surface": "read",
+    "toolName": "bash",
+    "invokedToolName": null,
+    "value": "/protected/config",
+    "matchedPattern": "/protected/**",
+    "matchedSpelling": null,
+    "commandContext": null,
+    "executedUnit": null,
+    "decidingPath": { "path": "/protected/config", "effect": "read", "effectSource": "core" }
+  },
+  "forwarding": null
+}

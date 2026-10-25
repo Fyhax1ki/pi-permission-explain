@@ -1,0 +1,20 @@
+{
+  "requestId": "local-bash-1",
+  "source": "tool_call",
+  "surface": "bash",
+  "value": "rm -rf build",
+  "agentName": null,
+  "request": {
+    "requester": { "agentName": null, "forwarded": false, "sessionId": null },
+    "surface": "bash",
+    "toolName": "bash",
+    "invokedToolName": null,
+    "value": "rm -rf build",
+    "matchedPattern": "rm *",
+    "matchedSpelling": null,
+    "commandContext": null,
+    "executedUnit": null,
+    "decidingPath": null
+  },
+  "forwarding": null
+}
