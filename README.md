@@ -6,6 +6,8 @@
 
 当前版本：`0.1.0`，初版。已有实现、离线验证和用户提供的真实请求诊断；完整终端/模型兼容性验收仍有待办，显式 none 仅是实验，不保证服务端关闭思考。
 
+npm 包名：`@fyhax1ki/pi-permission-explain`。使用个人作用域避免与同名包冲突；GitHub 仓库及项目目录仍为 `pi-permission-explain`。
+
 ## 运行环境
 
 - Node `>=22.19.0`；本次验证使用 Windows / Node `24.21.0`。
@@ -20,7 +22,7 @@
 发布到 npm 后，可在 Pi 中安装：
 
 ```powershell
-pi install npm:pi-permission-explain
+pi install npm:@fyhax1ki/pi-permission-explain
 ```
 
 在已配置权限插件的 Pi 环境中，从项目根目录临时加载此扩展：
@@ -136,10 +138,10 @@ npm run lint
 npm test
 npm pack --dry-run --ignore-scripts --registry=https://registry.npmjs.org/ --cache .npm-cache --logs-dir .npm-logs
 npm publish --access public --registry=https://registry.npmjs.org/
-npm view pi-permission-explain@0.1.0 version --registry=https://registry.npmjs.org/
+npm view @fyhax1ki/pi-permission-explain@0.1.0 version --registry=https://registry.npmjs.org/
 ```
 
-包内只包含 manifest、源码、字典和文档，不包含本机依赖链接、测试临时文件或用户配置。发布需要 npm 账号对包名有权限；若名称已被占用，需先更换包名并同步安装说明。按 npm 提示完成认证或双因素验证。同一版本不可重复发布，后续发布前需提升版本号。`publishConfig` 也固定为官方 registry，但不会代替账号认证。
+包内只包含 manifest、源码、字典和文档，不包含本机依赖链接、测试临时文件或用户配置。发布时应登录 npm 用户 `fyhax1ki`，或使用获授权发布该作用域包的账号。作用域包使用 `--access public` 公开发布。按 npm 提示完成认证或双因素验证。同一版本不可重复发布，后续发布前需提升版本号。`publishConfig` 也固定为官方 registry，但不会代替账号认证。
 
 ## 文档来源
 

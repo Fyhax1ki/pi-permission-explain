@@ -1,5 +1,5 @@
 {
-  "name": "pi-permission-explain",
+  "name": "@fyhax1ki/pi-permission-explain",
   "version": "0.1.0",
   "description": "On-demand, UI-only explanations for Pi permission prompts",
   "type": "module",
