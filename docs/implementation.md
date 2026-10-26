@@ -23,7 +23,7 @@
 - 工具链建议并非运行协议：采用 Node 内置测试而非 Vitest、ESLint 而非建议的 Biome，便于在本机受限网络下复用已安装工具。类型检查保持 strict，不引入生产工具依赖。
 - 按键协议识别和终端列宽使用 Pi TUI API，不自行解析 Kitty 协议或 CJK 宽度。
 - 配置快捷键采用 Pi KeyId 的严格子集：必须包含 ctrl / alt / super，禁止重复修饰符、裸键和单独 shift+字母。未调用 `registerShortcut()`，避免非审批状态下编辑器吃键。
-- 支持公开显示面为 bash、请求明确为 bash 的命令/路径审批，以及公开 `invokedToolName` 能证明的 bash 别名。无法证明 shell 语义时宁可不发请求。
+- 支持公开显示面为 bash、请求明确为 bash 的命令/路径审批（含 `external_directory` 外部路径审批），以及公开 `invokedToolName` 能证明的 bash 别名。bash 外部路径审批的命令全文同时出现在顶层 `value` 和 `request.value`，只有 `decidingPath` 与 `request.value` 不同才说明拿到的是命令；该形态的门控值改用 `decidingPath`。无法证明 shell 语义时宁可不发请求。
 - 设置页使用宿主真实 Input / SelectList 组件，本地过滤整个可用聊天模型快照。每次打开模型页重新读取注册表，不额外请求模型元数据，不按价格排序。
 - 系统 locale 在会话初始化和关闭设置时刷新；已有 rpiv-i18n 偏好在需要解析时读取，不导入扩展入口、不修改全局语言。
 - 根据后续用户要求，已取消原设计的旁挂 widget 以及四段固定告知文案。生成时只更新 Pi 状态栏，完成时使用 Pi 的 `ctx.ui.notify()`，既不修改权限插件代码，也不修改其 TUI。通知内容不写主会话消息。

@@ -23,9 +23,15 @@ export function parsePrompt(event: unknown, sessionGeneration: number): PromptSn
   );
   const shell = event.source === "tool_call" && request.toolName === "bash" && displayIsShell;
   const supportedGate = ["bash", "path", "read", "write", "edit", "external_directory"].includes(request.surface);
-  // A path-only projection is not a shell command just because the gated tool is bash.
-  const pathOnly = request.surface !== "bash" && event.value === request.value;
+  const decidingPath = isRecord(request.decidingPath) ? String(request.decidingPath.path) : null;
+  // A path-only projection is not a shell command just because the gated tool is bash. A bash external-directory
+  // ask publishes the command as both display and gate value, so equality alone only proves a path when the path
+  // the gate decided on is that same value.
+  const pathOnly = request.surface !== "bash" && event.value === request.value
+    && (decidingPath === null || decidingPath === request.value);
   const command = shell && supportedGate && !pathOnly && nonempty(event.value) ? event.value : null;
+  // That ask gates the whole command; the path it decided on is what the approval is about.
+  const gateValue = command !== null && request.value === command && decidingPath !== null ? decidingPath : request.value;
   return {
     requestId: event.requestId, sessionGeneration,
     toolName: request.toolName, gateSurface: request.surface,
@@ -34,8 +40,8 @@ export function parsePrompt(event: unknown, sessionGeneration: number): PromptSn
     forwarded,
     requesterSessionId: forwarded ? (forwarding?.requesterSessionId as string | null | undefined) ?? requester.sessionId : null,
     matchedPattern: request.matchedPattern,
-    decidingPath: isRecord(request.decidingPath) ? String(request.decidingPath.path) : null,
-    gateValue: request.value,
+    decidingPath,
+    gateValue,
   };
 }
 

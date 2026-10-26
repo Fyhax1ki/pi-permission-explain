@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { parseDecision, parsePrompt } from "../src/permissions.ts";
 import pathEvent from "./fixtures/bash-path.json" with { type: "json" };
+import externalDirectory from "./fixtures/bash-external-directory.json" with { type: "json" };
 import { fixture } from "./helpers.ts";
 
 test("bash rules explain only visible units; path asks use display command, never the gate path", () => {
@@ -22,6 +23,17 @@ test("only reliable shell surfaces supported, including explicitly published bas
   assert.equal(parsePrompt(published, 1)?.scope, "visible-unit");
   assert.equal(parsePrompt({ ...alias, source: "skill_read" }, 1)?.scope, "insufficient");
   assert.equal(parsePrompt({ ...alias, value: null }, 1)?.scope, "insufficient");
+});
+
+test("bash external-directory asks explain the command and gate on the deciding path", () => {
+  const ask = parsePrompt(externalDirectory, 2);
+  assert.equal(ask?.scope, "visible-command");
+  assert.equal(ask?.visibleCommand, externalDirectory.value);
+  assert.equal(ask?.gateValue, "/tmp/naa*");
+  assert.equal(ask?.decidingPath, "/tmp/naa*");
+  // Without a deciding path distinct from the gate value, equality still only proves a path projection.
+  const toolAsk = { ...pathEvent, value: pathEvent.request.value, request: { ...pathEvent.request, surface: "external_directory", decidingPath: null } };
+  assert.equal(parsePrompt(toolAsk, 1)?.scope, "insufficient");
 });
 
 test("forwarded identity is distinct from tool-call identity and parent directory", () => {

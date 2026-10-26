@@ -98,6 +98,11 @@ interface PromptSnapshot {
 - `event.request.value` 可能只是被保护的路径；
 - 只能在已可靠确认 shell 语义后，把前者当作命令。
 
+对于 bash 外部路径审批（`bash_external_directory`），`event.value` 与 `event.request.value` 都是命令全文，两者相等并不说明显示值退化成了路径：
+
+- 只有当 `request.decidingPath` 缺失，或它正好等于 `request.value` 时，等值才证明这是路径投影；
+- 该形态下门控事实改用 `decidingPath`，不把命令全文再当作门控值重复发送。
+
 对于普通 bash 命令审批，公开显示值可能只有被拦的命令单元；“full command” 可能仅存在于事件未广播的 evidence 中。
 
 因此适配器必须保留解释范围，提示模型和用户：**当前说明基于可见审批内容，不保证覆盖整条命令链。** 不得仅凭命令形状声称拿到了全文。

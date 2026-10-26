@@ -61,6 +61,7 @@
 
 - 畸形 payload、空 requestId、缺字段、错误字段类型。
 - bash 命令审批与路径审批中顶层 value / request.value 的区别。
+- bash 外部路径审批（`bash_external_directory`）的 value 与 request.value 同为命令全文，靠 decidingPath 区分，不因等值误判为只有路径。
 - 命令单元与全文不可区分时采用保守范围说明。
 - `requestId` 不等于 `toolCallId`，不能依赖缺失字段。
 - 同一命令文本的两个审批请求仍分别管理。

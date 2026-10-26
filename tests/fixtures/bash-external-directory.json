@@ -1,0 +1,20 @@
+{
+  "requestId": "perm-9ee75389-d694-4ec0-98da-1aad7c96f529",
+  "source": "tool_call",
+  "surface": "bash",
+  "value": "ls -d /tmp/naa* 2>/dev/null; echo \"--- sizes ---\"; du -sh /tmp/naa* 2>/dev/null",
+  "agentName": null,
+  "request": {
+    "requester": { "agentName": null, "forwarded": false, "sessionId": null },
+    "surface": "external_directory",
+    "toolName": "bash",
+    "invokedToolName": null,
+    "value": "ls -d /tmp/naa* 2>/dev/null; echo \"--- sizes ---\"; du -sh /tmp/naa* 2>/dev/null",
+    "matchedPattern": "*",
+    "matchedSpelling": null,
+    "commandContext": null,
+    "executedUnit": null,
+    "decidingPath": { "path": "/tmp/naa*", "effect": "unproven", "effectSource": "unproven" }
+  },
+  "forwarding": null
+}
