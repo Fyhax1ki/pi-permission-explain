@@ -1,6 +1,6 @@
 {
   "name": "@fyhax1ki/pi-permission-explain",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "On-demand, UI-only explanations for Pi permission prompts",
   "type": "module",
   "license": "UNLICENSED",
