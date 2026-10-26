@@ -57,7 +57,7 @@ test("real Pi loader + isolated event bus: lifecycle, raw input, no global short
   stream.push({ type: "done", reason: "stop", message: message() });
   await flush();
   raw?.("\x1be"); assert.equal(calls, 1);
-  assert.equal(notifications.length, 1); assert.match(notifications[0] ?? "", /Purpose:/);
+  assert.equal(notifications.length, 1); assert.match(notifications[0] ?? "", /Removes the build directory/);
   assert.match(notifications[0] ?? "", /\x1b\[38;5;45m/);
   await diagnostics.handler("", ctx as ExtensionCommandContext);
   assert.equal(calls, 1); assert.match(notifications.at(-1) ?? "", /done/);

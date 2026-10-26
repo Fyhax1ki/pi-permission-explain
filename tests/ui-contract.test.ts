@@ -4,7 +4,7 @@ import test from "node:test";
 import type { ExtensionUIContext } from "@earendil-works/pi-coding-agent";
 import { stripTerminalSequences, Text, visibleWidth } from "@earendil-works/pi-tui";
 import { ShortcutInput, validShortcut } from "../src/keys.ts";
-import { safeText } from "../src/ui/display.ts";
+import { plainProse, safeText } from "../src/ui/display.ts";
 import { explanationNotice, ExplanationNotifications } from "../src/ui/explanation-notifications.ts";
 import { filterChoices } from "../src/ui/model-picker.ts";
 import { noticeTheme, presentation, prompt, result, strictMock } from "./helpers.ts";
@@ -27,7 +27,8 @@ test("Pi notifications preserve complete text and omit the four removed banners"
   assert.equal(safeText("before\x1b[2Jafter\u202e"), "beforeafter");
   const view = { phase: "done", prompt: prompt(), presentation: { ...presentation, language: "zh-CN", modelLabel: "very-long-provider-模型".repeat(10) }, result: { ...result, text: "说明中文长文字\n".repeat(60) }, cached: false } as const;
   const notice = explanationNotice(view);
-  assert.ok(notice.includes(view.result.text));
+  assert.ok(notice.includes(plainProse(view.result.text)));
+  assert.equal(notice.match(/说明中文长文字/g)?.length, 60);
   assert.doesNotMatch(notice, /有限脱敏|不保证覆盖|推理偏好尽力适配|不是批准或安全保证/);
   assert.match(notice, /small \[test\]/);
 });
@@ -53,6 +54,14 @@ test("only completion notifies once; streaming uses status, never widgets or a f
   assert.equal(messages.length, 1); assert.equal(statuses.at(-1), undefined); assert.equal(widgets, 0);
 });
 
+test("model Markdown is flattened into one plain paragraph", () => {
+  const view = { phase: "done", prompt: prompt(), presentation,
+    result: { ...result, text: "## 目的\n- **删除** `build/` 目录\n\n1. 不可恢复" }, cached: false } as const;
+  const notice = explanationNotice(view);
+  assert.ok(notice.includes("目的 删除 build/ 目录 不可恢复"));
+  assert.doesNotMatch(notice, /\*\*|`|^#|^- /m);
+});
+
 test("highlighted explanations strip model escape sequences before applying theme color and bold title", () => {
   const view = { phase: "done", prompt: prompt(), presentation,
     result: { ...result, modelId: "small\x1b[2J", text: "First\x1b[31m line\x1b[0m\nSecond\u202e line", truncated: true }, cached: false } as const;
@@ -62,7 +71,7 @@ test("highlighted explanations strip model escape sequences before applying them
   assert.ok(styled.startsWith("\x1b[22m\x1b[38;5;45m\x1b[1m"));
   assert.ok(styled.endsWith("\x1b[39m\x1b[22m"));
   assert.doesNotMatch(styled, /\x1b\[2J|\x1b\[31m|\u202e/);
-  assert.ok(styled.includes("First line\nSecond line"));
+  assert.ok(styled.includes("First line Second line"));
   // Exercise Pi's normal dim wrapper and real multiline/wrapping component.
   const wrapped = `\x1b[90m\x1b[2m${styled}\x1b[22;39m`;
   for (const width of [12, 40, 120]) {

@@ -11,3 +11,15 @@ export function safeText(text: string, limit = MAX_OUTPUT_CHARS): string {
 export function singleLine(text: string, limit = 200): string {
   return safeText(text, limit).replace(/[\r\n]+/g, " ");
 }
+
+/** Render model prose as one plain paragraph: no Markdown headings, lists, emphasis, code spans or line breaks. */
+export function plainProse(text: string, limit = MAX_OUTPUT_CHARS): string {
+  return safeText(text, limit)
+    .replace(/^\s*```.*$/gm, " ")
+    .replace(/^\s{0,3}(?:#{1,6}|[-*+•>]|\d+[.)])\s+/gm, "")
+    .replace(/\*\*(.+?)\*\*/g, "$1")
+    .replace(/`([^`]*)`/g, "$1")
+    .replace(/[\r\n]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}

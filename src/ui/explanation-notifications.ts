@@ -1,6 +1,6 @@
 import type { ExtensionUIContext, Theme } from "@earendil-works/pi-coding-agent";
 import type { ExplanationView } from "../types.ts";
-import { safeText, singleLine } from "./display.ts";
+import { plainProse, singleLine } from "./display.ts";
 import { translator } from "./i18n.ts";
 
 export const STATUS_ID = "permission-explain";
@@ -12,7 +12,7 @@ export function explanationNotice(view: Extract<ExplanationView, { phase: "done"
   const lines = [
     theme ? theme.bold(title) : title,
     "",
-    safeText(result.text),
+    plainProse(result.text),
     ...(result.truncated ? [t("truncated")] : []),
   ].join("\n");
   // Pi wraps info notifications in dim; clear faint before applying trusted theme styles.

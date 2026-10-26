@@ -12,7 +12,10 @@ test("one minimal JSON message, language constraint, no tools/history and no sec
   const serialized = JSON.stringify(input.context);
   assert.ok(!serialized.includes("fake-sensitive"));
   assert.match(serialized, /zh-TW/);
-  assert.match(serialized, /Purpose, Effects, Cautions/);
+  assert.match(serialized, /one or two short sentences/);
+  assert.match(serialized, /no headings, bullet lists/);
+  assert.match(serialized, /irreversibly changes/);
+  assert.doesNotMatch(serialized, /Purpose, Effects, Cautions/);
   assert.match(serialized, /never restore/);
   assert.match(serialized, /identifiers verbatim/);
   assert.match(serialized, /untrusted JSON/);

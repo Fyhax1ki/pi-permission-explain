@@ -18,7 +18,7 @@ export function prompt(id = "one", generation = 1): PromptSnapshot {
   return parsed;
 }
 
-export const result: ExplanationResult = { text: "Purpose: remove build. Effects: deletes files. Cautions: irreversible.", truncated: false, provider: "test", modelId: "small" };
+export const result: ExplanationResult = { text: "Removes the build directory; this deletes files and cannot be undone.", truncated: false, provider: "test", modelId: "small" };
 export const presentation: Presentation = { language: "en", shortcut: "alt+e", modelLabel: "small [test]", routed: false };
 export const noticeTheme = (): Theme => strictMock<Theme>({
   fg: (color, text) => {
