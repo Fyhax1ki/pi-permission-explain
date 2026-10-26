@@ -125,24 +125,3 @@ npm pack --dry-run --ignore-scripts
 本次网络策略禁止 npm 下载，开发验证复用了机器中已安装的依赖，工作区 `node_modules` 为本机链接，不应复制或发布。开发工具采用 TypeScript + Node 内置测试 + ESLint，未新增强制生产依赖。未生成依赖锁文件；所有直接依赖版本已固定。
 
 当前验证与待验收清单见 [验证记录](docs/validation.md)。许可证目前为 `UNLICENSED`，尚未授予开源许可；公开 npm 发布不等于授予开源使用或再分发许可。
-
-## 手动发布 npm
-
-在项目根目录执行，所有 npm 网络操作显式指定官方源；无需修改全局 registry：
-
-```powershell
-npm login --registry=https://registry.npmjs.org/
-npm whoami --registry=https://registry.npmjs.org/
-npm run check
-npm run lint
-npm test
-npm pack --dry-run --ignore-scripts --registry=https://registry.npmjs.org/ --cache .npm-cache --logs-dir .npm-logs
-npm publish --access public --registry=https://registry.npmjs.org/
-npm view @fyhax1ki/pi-permission-explain@0.1.0 version --registry=https://registry.npmjs.org/
-```
-
-包内只包含 manifest、源码、字典和文档，不包含本机依赖链接、测试临时文件或用户配置。发布时应登录 npm 用户 `fyhax1ki`，或使用获授权发布该作用域包的账号。作用域包使用 `--access public` 公开发布。按 npm 提示完成认证或双因素验证。同一版本不可重复发布，后续发布前需提升版本号。`publishConfig` 也固定为官方 registry，但不会代替账号认证。
-
-## 文档来源
-
-原始文档读取自 `C:\Users\panda\VscodeProjects\work\pi-permission-explain`，该目录未修改。原始设计保存在 [DESIGN.md](DESIGN.md) 和 `docs/01-*.md` 至 `docs/09-*.md`，其中“尚未实现”等描述是历史设计阶段状态；当前实现状态以本 README、实现说明及验证记录为准。
